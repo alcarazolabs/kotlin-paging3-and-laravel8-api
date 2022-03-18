@@ -4,14 +4,11 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.kotlinpaginationwithlaravelandpaging3.R
-import com.example.kotlinpaginationwithlaravelandpaging3.data.remote.UserDataSource
 import com.example.kotlinpaginationwithlaravelandpaging3.databinding.FragmentUsersBinding
 import com.example.kotlinpaginationwithlaravelandpaging3.presentation.UserViewModel
-import com.example.kotlinpaginationwithlaravelandpaging3.presentation.UserViewModel2
 import com.example.kotlinpaginationwithlaravelandpaging3.presentation.UserViewModelFactory
 import com.example.kotlinpaginationwithlaravelandpaging3.repository.RetrofitClient
 import com.example.kotlinpaginationwithlaravelandpaging3.repository.UserRepositoryImp

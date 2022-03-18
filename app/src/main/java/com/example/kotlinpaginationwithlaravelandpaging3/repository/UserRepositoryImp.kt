@@ -4,8 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.example.kotlinpaginationwithlaravelandpaging3.data.model.UserData
-import com.example.kotlinpaginationwithlaravelandpaging3.data.model.UserResponse
-import com.example.kotlinpaginationwithlaravelandpaging3.data.remote.UserDataSource
+import com.example.kotlinpaginationwithlaravelandpaging3.data.remote.UserPagingDataSource
 import kotlinx.coroutines.flow.Flow
 
 //constante para establecer el número de registros por página. Se recomienda que sea igual al numero de registros
@@ -23,7 +22,7 @@ class UserRepositoryImp (private val webService: WebService ) : UserRepository {
                 enablePlaceholders = false
             ),
             pagingSourceFactory = {
-                UserDataSource(web_service = webService )
+                UserPagingDataSource(web_service = webService )
             }
         ).flow
     }

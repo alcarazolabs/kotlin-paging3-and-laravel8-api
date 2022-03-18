@@ -9,7 +9,7 @@ import com.example.kotlinpaginationwithlaravelandpaging3.repository.WebService
 import retrofit2.HttpException
 import java.io.IOException
 
-class UserDataSource (private val web_service: WebService) : PagingSource<Int, UserData>() {
+class UserPagingDataSource (private val web_service: WebService) : PagingSource<Int, UserData>() {
 
 
     override fun getRefreshKey(state: PagingState<Int, UserData>): Int? {
