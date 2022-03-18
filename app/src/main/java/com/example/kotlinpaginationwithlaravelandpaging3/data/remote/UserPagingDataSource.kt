@@ -9,7 +9,8 @@ import com.example.kotlinpaginationwithlaravelandpaging3.repository.WebService
 import retrofit2.HttpException
 import java.io.IOException
 
-class UserDataSource (private val web_service: WebService) : PagingSource<Int, UserData>() {
+class UserPagingDataSource (private val web_service: WebService,
+                            private val user_name: String?) : PagingSource<Int, UserData>() {
 
 
     override fun getRefreshKey(state: PagingState<Int, UserData>): Int? {
@@ -24,7 +25,8 @@ class UserDataSource (private val web_service: WebService) : PagingSource<Int, U
             //obtener numero de pagina
             // Fuente: https://www.youtube.com/watch?v=OeYlsoPQO2c
             val nextPage: Int = params.key ?: FIRST_PAGE_INDEX
-            val response = web_service.getUsers(nextPage)
+            val response = web_service.getUsers(nextPage, user_name)
+
             Log.d("total", response[0].total.toString());
 
             var nextPageNumber: Int? = null

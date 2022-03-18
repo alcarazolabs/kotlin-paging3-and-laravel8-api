@@ -1,14 +1,15 @@
 package com.example.kotlinpaginationwithlaravelandpaging3.ui.user
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.View
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.example.kotlinpaginationwithlaravelandpaging3.R
-import com.example.kotlinpaginationwithlaravelandpaging3.data.remote.UserDataSource
 import com.example.kotlinpaginationwithlaravelandpaging3.databinding.FragmentUsersBinding
 import com.example.kotlinpaginationwithlaravelandpaging3.presentation.UserViewModel
 import com.example.kotlinpaginationwithlaravelandpaging3.presentation.UserViewModel2
@@ -42,7 +43,7 @@ class UsersFragment : Fragment(R.layout.fragment_users){
 
         initView()
         setObserver()
-
+        setupSearchView()
        // usersRyclerViewAdapter = UsersAdapter(this)
 
        // binding.rvUsers.layoutManager = LinearLayoutManager(requireContext())
@@ -59,29 +60,38 @@ class UsersFragment : Fragment(R.layout.fragment_users){
     fun setObserver(){
 
         lifecycleScope.launchWhenCreated {
-            viewModel1.getUsers().collectLatest {
+            viewModel1.getUsers(null).collectLatest {
                 recyclerViewAdapterv3.submitData(it)
             }
         }
 
-        // Another way:
-        /*
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel2.getUsers().collectLatest { users ->
-                MyRvAdapter?.submitData(users)
+    }
+
+    private fun setupSearchView(){
+        binding.searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                //Busqueda usando el viewModel y Flow
+                Log.d("search", query!!)
+                lifecycleScope.launchWhenCreated {
+                    viewModel1.getUsers(query).collectLatest {
+                        recyclerViewAdapterv3.submitData(it)
+                    }
+                }
+                return false
             }
-        }
-        */
+            override fun onQueryTextChange(newText: String?): Boolean {
+                //Busqueda usando el viewModel y Flow
+                Log.d("search", newText!!)
+                lifecycleScope.launchWhenCreated {
+                    viewModel1.getUsers(newText).collectLatest {
+                        recyclerViewAdapterv3.submitData(it)
+                    }
+                }
+                //WARNING: DO NOT USE THIS METHOD IN A PRODUCTION PROJECT BECAUSE CAN PRODUCE
+                //HUNDRES OF REQUEST WHILE THE USER WRITES A SEARCH, INSTEAD OF USE THE METHOD onQueryTextSubmit.
+                return false
+            }
+        })
     }
-
-/*
-    override fun onUserDataClick(userData: UserData) {
-        Log.d("UsersFragment", "click user: ${userData.name}")
-    }
-
-    override fun onUserDataLongClick(userData: UserData, position: Int) {
-        Log.d("UsersFragment", "long click user: ${userData.name}")
-    }
-*/
 
 }

@@ -7,6 +7,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface UserRepository {
 
-    suspend fun getUsers() : Flow<PagingData<UserData>>
+    suspend fun getUsers(user_name : String?) : Flow<PagingData<UserData>>
 
 }

@@ -12,7 +12,8 @@ import retrofit2.http.Query
 interface WebService {
     @Headers("Accept: application/json")
     @GET("users")
-    suspend fun getUsers(@Query("page") query: Int) : List<UserResponse>
+    suspend fun getUsers(@Query("page") query: Int,
+                        @Query ("name") user_name : String? = null) : List<UserResponse>
 
 
 }

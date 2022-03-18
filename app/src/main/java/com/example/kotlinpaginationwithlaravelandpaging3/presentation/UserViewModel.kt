@@ -20,8 +20,8 @@ class UserViewModel (private val repo : UserRepository) : ViewModel() {
         -   Tiene como parametro el repositorio y el repo accede al dataSource y este ultimo al webService.
          */
 
-    suspend fun getUsers(): Flow<PagingData<UserData>> {
-        return repo.getUsers()
+    suspend fun getUsers(user_name: String?): Flow<PagingData<UserData>> {
+        return repo.getUsers(user_name)
             .map { it.map { it } }
             .cachedIn(viewModelScope)
     }
